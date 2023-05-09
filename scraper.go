@@ -159,6 +159,16 @@ func SetProxy(proxy string) error {
 	return defaultScraper.SetProxy(proxy)
 }
 
+// get the cookie jar from the http client
+func (s *Scraper) GetCookies() *http.CookieJar {
+	return &s.client.Jar
+}
+
+// set the cookie jar for the http client
+func (s *Scraper) SetCookies(jar *http.CookieJar) {
+	s.client.Jar = *jar
+}
+
 func init() {
 	defaultScraper = New()
 }
