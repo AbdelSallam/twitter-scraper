@@ -160,13 +160,19 @@ func SetProxy(proxy string) error {
 }
 
 // get the cookie jar from the http client
-func (s *Scraper) GetCookies() *http.CookieJar {
-	return &s.client.Jar
+func (s *Scraper) GetCookies() []*http.Cookie {
+	return s.client.Jar.Cookies(&url.URL{
+		Scheme: "https",
+		Host:   "twitter.com",
+	})
 }
 
 // set the cookie jar for the http client
-func (s *Scraper) SetCookies(jar *http.CookieJar) {
-	s.client.Jar = *jar
+func (s *Scraper) SetCookies(cookies []*http.Cookie) {
+	s.client.Jar.SetCookies(&url.URL{
+		Scheme: "https",
+		Host:   "twitter.com",
+	}, cookies)
 }
 
 func init() {
